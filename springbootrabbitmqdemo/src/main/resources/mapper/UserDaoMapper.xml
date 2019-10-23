@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.king.rabbitmqdemo.dao.UserDao">
+
+  <resultMap id="BaseResultMap" type="com.king.rabbitmqdemo.bean.User">
+    <id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+    <result column="USER_ENGLISH_NAME" jdbcType="VARCHAR" property="userEnglishName" />
+    <result column="USER_AGE" jdbcType="INTEGER" property="userAge" />
+    <result column="USER_NET_ASSERT" jdbcType="DECIMAL" property="userNetAssert" />
+    <result column="USER_BIRTHDAY" jdbcType="TIMESTAMP" property="userBirthday" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    USER_ID, USER_NAME, USER_ENGLISH_NAME, USER_AGE, USER_NET_ASSERT, USER_BIRTHDAY
+  </sql>
+
+  <select id="selectByUserId" parameterType="com.king.rabbitmqdemo.bean.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from TUSERS
+    where USER_ID = #{userId}
+  </select>
+
+  <delete id="deleteByUserId" parameterType="com.king.rabbitmqdemo.bean.User">
+    delete from TUSERS
+    where USER_ID = #{userId}
+  </delete>
+
+  <insert id="addUser" parameterType="com.king.rabbitmqdemo.bean.User">
+    insert into TUSERS(USER_ID, USER_NAME, USER_ENGLISH_NAME, USER_AGE, USER_NET_ASSERT, USER_BIRTHDAY)
+    values(#{userId}, #{userName}, #{userEnglishName}, #{userAge}, #{userNetAssert}, #{userBirthday})
+  </insert>
+
+  <update id="updateUser" parameterType="com.king.rabbitmqdemo.bean.User">
+    update TUSERS set
+        USER_ID = #{userId},
+        USER_NAME = #{userName},
+        USER_ENGLISH_NAME = #{userEnglishName},
+        USER_AGE = #{userAge},
+        USER_NET_ASSERT = #{userNetAssert},
+        USER_BIRTHDAY = #{userBirthday}
+    where USER_ID = #{userId}
+  </update>
+</mapper>
